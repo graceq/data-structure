@@ -1,0 +1,25 @@
+int partition(int nums[],int start,int end){
+	int i = start, pivot = start;
+	int flag = nums[pivot];
+	swap(nums[pivot],nums[end]);
+	while(i<end){
+		if(nums[i]<nums[end]){
+			swap(nums[i],nums[pivot]);
+			pivot++;
+		}
+		i++;
+	}
+	swap(nums[pivot],nums[end]);
+	return pivot;
+}
+
+void quickSort(int nums[],int start,int end){
+	if(start==end)
+		return ;
+	int pivot = partition(nums,start,end);
+	if(pivot>start)
+		quickSort(nums,start,pivot-1);
+	if(pivot<end)
+		quickSort(nums,pivot+1,end);
+	return;
+}
