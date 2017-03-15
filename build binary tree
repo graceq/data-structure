@@ -1,0 +1,30 @@
+struct TreeNode{
+	int val;
+	TreeNode* left;
+	TreeNode* right;
+	TreeNode(int v){ val = v; left = right = NULL; }; 
+};
+
+TreeNode* buildTree(int *preorderbegin, int *preorderend, int *inorderbegin, int *inorderend){
+	TreeNode* root = new TreeNode(*preorderbegin);
+	if(preorderbegin == preorderend){
+		if(inorderbegin==inorderend)
+			return root;
+		else
+			throw exception("invalid order");
+	}
+	int *start = inorderbegin;
+	int rootValue = *preorderbegin;
+	while((*start)!=rootValue)
+		start++;
+	if(start==inorderend && (*start)!=rootValue)
+		throw exception("invalid order");
+	int left_cnt = start-inorderbegin;
+	int right_cnt = inorderend - start;
+	if(left_cnt>0) 
+		root->left = buildTree(preorderbegin+1,preorderbegin+left_cnt,inorderbegin,start-1);
+	if(right_cnt>0)
+		root->right = buildTree(preorderbegin+left_cnt+1,preorderend,start+1,inorderend);
+	return root;
+
+}
